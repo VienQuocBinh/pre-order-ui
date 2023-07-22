@@ -1,11 +1,13 @@
 import "./sidebar.scss";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import CreditCardOutlinedIcon from "@mui/icons-material/CreditCardOutlined";
 import PortraitOutlinedIcon from "@mui/icons-material/PortraitOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import { useProductContext } from "../../context/ProductContext";
+import { Link } from "react-router-dom";
 
 export const Sidebar = () => {
   return (
@@ -17,20 +19,25 @@ export const Sidebar = () => {
       <div className="center">
         <ul>
           <p className="title">MAIN</p>
-          <li>
-            <DashboardOutlinedIcon className="icon" />
-            <span>Dashboard</span>
-          </li>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <li>
+              <DashboardOutlinedIcon className="icon" />
+              <span>Dashboard</span>
+            </li>
+          </Link>
           <p className="title">List</p>
-
-          <li>
-            <AccountCircleOutlinedIcon className="icon" />
-            <span>Users</span>
-          </li>
-          <li>
-            <StorefrontOutlinedIcon className="icon" />
-            <span>Products</span>
-          </li>
+          <Link to="/users" style={{ textDecoration: "none" }}>
+            <li>
+              <AccountCircleOutlinedIcon className="icon" />
+              <span>Users</span>
+            </li>
+          </Link>
+          <Link to="/products" style={{ textDecoration: "none" }}>
+            <li>
+              <StorefrontOutlinedIcon className="icon" />
+              <span>Products</span>
+            </li>
+          </Link>
           <li>
             <CreditCardOutlinedIcon className="icon" />
             <span>Orders</span>
