@@ -11,9 +11,21 @@ const useProduct = () => {
     return res;
   };
 
+  const create = async (product, accessToken) => {
+    const res = await productApi.create(product, accessToken);
+    return res;
+  };
+
+  const deleteProduct = async (id, accessToken) => {
+    const res = await productApi.deleteProduct(id, accessToken);
+    return res;
+  };
+
   return {
     getAllProducts,
     getById,
+    create,
+    deleteProduct,
   };
 };
 

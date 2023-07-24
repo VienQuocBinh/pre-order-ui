@@ -8,7 +8,7 @@ import { CircularProgress } from "@mui/material";
 
 export const ProductDataTable = () => {
   const [data, setData] = useState([]);
-  const { getAllProducts } = useProductContext();
+  const { getAllProducts, deleteProduct } = useProductContext();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -21,7 +21,11 @@ export const ProductDataTable = () => {
   }, [getAllProducts]);
 
   const handleDelete = (id) => {
+    console.log(id);
     setData(data.filter((item) => item.id !== id));
+    deleteProduct(id, "accessToken")
+      .then((res) => console.log())
+      .catch((err) => console.log(err));
   };
 
   const actionColumn = [
@@ -32,7 +36,10 @@ export const ProductDataTable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link  to={`/products/${params.row.id}`} style={{ textDecoration: "none" }}>
+            <Link
+              to={`/products/${params.row.id}`}
+              style={{ textDecoration: "none" }}
+            >
               <div className="viewButton">View</div>
             </Link>
             <div
@@ -74,7 +81,6 @@ export const ProductDataTable = () => {
         columns={productColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
-        checkboxSelection
       />
     </div>
   );

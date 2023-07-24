@@ -1,26 +1,51 @@
 import api from "./api";
 
-export const getAllProducts = (accessToken) =>
+const getAllProducts = (accessToken) =>
   api
-    .get("/product/getAll", {
+    .get("/product/getAll?PageSize=999", {
       headers: {
         authorization: "Bearer " + accessToken,
       },
     })
-    .then((res) => res.data);
+    .then((res) => res.data)
+    .catch((err) => console.log(err));
 
-export const getById = (id, accessToken) =>
+const getById = (id, accessToken) =>
   api
     .get(`/product/GetById?productId=${id}`, {
       headers: {
         authorization: "Bearer " + accessToken,
       },
     })
-    .then((res) => res.data);
+    .then((res) => res.data)
+    .catch((err) => console.log(err));
+
+const create = (product, accessToken) =>
+  api
+    .post(`/product/Create`, product, {
+      headers: {
+        authorization: "Bearer " + accessToken,
+      },
+    })
+    .then((res) => res.data)
+    .catch((err) => console.log(err));
+
+
+const deleteProduct = (id, accessToken) =>
+    api
+      .delete(`/product/Delete?productId=${id}`, {
+        headers: {
+          authorization: "Bearer " + accessToken,
+        },
+      })
+      .then((res) => res.data)
+      .catch((err) => console.log(err));
 
 const productApi = {
   getAllProducts,
   getById,
+  create,
+  deleteProduct
 };
 
 export default productApi;

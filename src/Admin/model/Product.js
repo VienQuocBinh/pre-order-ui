@@ -6,7 +6,20 @@ export const Product = {
   description: "",
   execptedReleaseDate: "",
   isActive: true,
-  productDetails: [], // ProductDetail
+  categoryId: 0,
+  campainId: 2,
+  discountRate: 0,
+  productDetails: [
+    {
+      size: "",
+      color: "",
+      imgUrl: "",
+      width: 0,
+      height: 0,
+      material: "",
+      description: "",
+    },
+  ], // ProductDetail
 };
 
 

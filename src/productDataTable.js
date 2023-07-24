@@ -1,5 +1,5 @@
 export const productColumns = [
-  { field: "id", headerName: "ID", width: 70 },
+  { field: "id", headerName: "ID", width: 50 },
   {
     field: "productCode",
     headerName: "Code",
@@ -20,16 +20,21 @@ export const productColumns = [
     headerName: "Price",
     width: 100,
   },
-//   {
-//     field: "status",
-//     headerName: "Status",
-//     width: 160,
-//     renderCell: (params) => {
-//       return (
-//         <div className={`cellWithStatus ${params.row.status}`}>
-//           {params.row.status}
-//         </div>
-//       );
-//     },
-//   },
+  // {
+  //   field: "isActive",
+  //   headerName: "Status",
+  //   width: 100,
+  // },
+  {
+    field: "isActive",
+    headerName: "Status",
+    width: 160,
+    renderCell: (params) => {
+      return (
+        <div className={`cellWithStatus ${params.row.isActive}`}>
+          {params.row.isActive ? "Active" : "Deleted"}
+        </div>
+      );
+    },
+  },
 ];
