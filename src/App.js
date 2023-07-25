@@ -11,10 +11,12 @@ import { productInputs } from "./formSource";
 import { CategoryProvider } from "./Admin/context/CategoryContext";
 import { AuthContextProvider } from "./Admin/context/AuthContext";
 import { UserContextProvider } from "./Admin/context/UserContext";
+import { ChakraProvider } from "@chakra-ui/react";
 
 function App() {
   return (
     <div className="App">
+      {/* <ChakraProvider> */}
       <AuthContextProvider>
         <UserContextProvider>
       <ProductProvider>
@@ -45,6 +47,7 @@ function App() {
       </ProductProvider>
       </UserContextProvider>
       </AuthContextProvider>
+      {/* </ChakraProvider> */}
     </div>
   );
 }
