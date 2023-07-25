@@ -9,10 +9,14 @@ import { UserList } from "./Admin/pages/list/UserList";
 import { NewUser } from "./Admin/pages/new/NewUser";
 import { productInputs } from "./formSource";
 import { CategoryProvider } from "./Admin/context/CategoryContext";
+import { AuthContextProvider } from "./Admin/context/AuthContext";
+import { UserContextProvider } from "./Admin/context/UserContext";
 
 function App() {
   return (
     <div className="App">
+      <AuthContextProvider>
+        <UserContextProvider>
       <ProductProvider>
         <CategoryProvider>
           <BrowserRouter>
@@ -39,6 +43,8 @@ function App() {
           </BrowserRouter>
         </CategoryProvider>
       </ProductProvider>
+      </UserContextProvider>
+      </AuthContextProvider>
     </div>
   );
 }
