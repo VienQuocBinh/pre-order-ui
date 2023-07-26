@@ -11,57 +11,57 @@ import { OrderProductTable } from "../../components/table/OrderProductTable";
 
 export const OrderDetail = () => {
   const param = useParams();
-  // const [order, setOrder] = useState(Order);
+  const [order, setOrder] = useState(Order);
   const { getById } = useOrderContext();
   const [imgUrl, setImgUrl] = useState("");
   const [loading, setLoading] = useState(false);
 
-  let order = {
-    id: 7,
-    orderCode: "ET1EHZ7F",
-    customer: {
-      id: 4,
-      roleId: 1,
-      name: "string",
-      email: "string@gmail.com",
-      phone: "090980782",
-      imgUrl: "string",
-      isActive: true,
-    },
-    paymentType: {
-      paymentMethod: "Momo",
-    },
-    deliveryPhone: "0908940273",
-    checkInDate: "2023-07-05T14:14:38.923",
-    totalAmount: 2400000,
-    discountRate: 0,
-    finalAmount: 2402000,
-    shippingFee: 2000,
-    orderStatus: "Pending",
-    isConfirm: false,
-    quantity: 3,
-    note: "nothing",
-    orderDetails: [
-      {
-        id: 5,
-        orderId: 7,
-        productCode: "LOA1121   ",
-        productName: "Loa di động LG XBOOM Go PN7",
-        unitPrice: 1,
-        quantity: 3,
-        totalAmount: 2400000,
-        discountRate: 2402000,
-        finalAmount: 3,
-        note: "nothing",
-      },
-    ],
-  };
+  // let order = {
+  //   id: 7,
+  //   orderCode: "ET1EHZ7F",
+  //   customer: {
+  //     id: 4,
+  //     roleId: 1,
+  //     name: "string",
+  //     email: "string@gmail.com",
+  //     phone: "090980782",
+  //     imgUrl: "string",
+  //     isActive: true,
+  //   },
+  //   paymentType: {
+  //     paymentMethod: "Momo",
+  //   },
+  //   deliveryPhone: "0908940273",
+  //   checkInDate: "2023-07-05T14:14:38.923",
+  //   totalAmount: 2400000,
+  //   discountRate: 0,
+  //   finalAmount: 2402000,
+  //   shippingFee: 2000,
+  //   orderStatus: "Pending",
+  //   isConfirm: false,
+  //   quantity: 3,
+  //   note: "nothing",
+  //   orderDetails: [
+  //     {
+  //       id: 5,
+  //       orderId: 7,
+  //       productCode: "LOA1121   ",
+  //       productName: "Loa di động LG XBOOM Go PN7",
+  //       unitPrice: 1,
+  //       quantity: 3,
+  //       totalAmount: 2400000,
+  //       discountRate: 2402000,
+  //       finalAmount: 3,
+  //       note: "nothing",
+  //     },
+  //   ],
+  // };
 
   useEffect(() => {
     setLoading(true);
     getById(param.orderId, "accessToken")
       .then((res) => {
-        // setOrder(res.data);
+        setOrder(res.data);
         //   setImgUrl(res.data.orderDetails[0].imgUrl);
       })
       .then(() => setLoading(false))

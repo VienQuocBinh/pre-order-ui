@@ -5,6 +5,7 @@ import useLogin from "../../hooks/auth/useLogin";
 import useUserContext from "../../hooks/useUserContext";
 import useAuthContext from "../../hooks/useAuthContext";
 import { useToast } from "@chakra-ui/react";
+import { Alert, Snackbar } from "@mui/material";
 
 export const Login = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +13,7 @@ export const Login = () => {
     password: "string",
   });
   const navigate = useNavigate();
-  const {login} = useLogin();
+  const { login } = useLogin();
   const toast = useToast();
   const { SetUser, SetAccessToken, SetRefreshToken, accessToken } =
     useUserContext();
@@ -32,11 +33,10 @@ export const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // You can add your login logic here, such as sending the data to the server.
-    console.log("Form data:", formData);
     try {
-      const res = await login(formData.email,formData.password);
-      console.log("Login user response:", res.data.data);
-      if(res.data.status.success === true){
+      const res = await login(formData.email, formData.password);
+      console.log("Login user response:", res);
+      if (res.data.status.success === true) {
         SetUser(res.data.data); // Extracting the "data" object and updating state
         toast({
           title: "Đăng nhập thành công!",
@@ -46,7 +46,7 @@ export const Login = () => {
           duration: 1000,
         });
         navigate("/home");
-      }else{
+      } else {
         toast({
           title: "Đăng nhập thất bại",
           status: "error",
@@ -56,14 +56,14 @@ export const Login = () => {
         });
       }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
       toast({
-          title: "Đăng nhập thất bại",
-          status: "error",
-          position: "top-right",
-          isClosable: true,
-          duration: 1000,
-        });
+        title: "Đăng nhập thất bại",
+        status: "error",
+        position: "top-right",
+        isClosable: true,
+        duration: 1000,
+      });
     }
   };
 
@@ -78,6 +78,7 @@ export const Login = () => {
           value={formData.email}
           onChange={handleChange}
           required
+          autoFocus
         />
         <input
           type="password"
