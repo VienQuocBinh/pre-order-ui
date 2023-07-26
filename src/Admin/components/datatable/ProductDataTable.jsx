@@ -1,16 +1,16 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { productColumns } from "../../../productDataTable";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useProductContext } from "../../context/ProductContext";
 import { CircularProgress } from "@mui/material";
 
 export const ProductDataTable = () => {
-  const [data, setData] = useState([]);
   const { getAllProducts, deleteProduct } = useProductContext();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -22,17 +22,18 @@ export const ProductDataTable = () => {
 
   const handleDelete = (id) => {
     console.log(id);
-    setData(data.filter((item) => item.id !== id));
+    // setData(data.filter((item) => item.id !== id));
     deleteProduct(id, "accessToken")
       .then((res) => console.log())
       .catch((err) => console.log(err));
+    navigate("/products");
   };
 
   const actionColumn = [
     {
       field: "action",
       headerName: "Action",
-      width: 200,
+      width: 150,
       renderCell: (params) => {
         return (
           <div className="cellAction">
@@ -42,12 +43,14 @@ export const ProductDataTable = () => {
             >
               <div className="viewButton">View</div>
             </Link>
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
-            >
-              Delete
-            </div>
+            {params.row.isActive ? (
+              <div
+                className="deleteButton"
+                onClick={() => handleDelete(params.row.id)}
+              >
+                Delete
+              </div>
+            ) : null}
           </div>
         );
       },

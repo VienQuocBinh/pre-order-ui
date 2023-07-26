@@ -11,39 +11,49 @@ import { productInputs } from "./formSource";
 import { CategoryProvider } from "./Admin/context/CategoryContext";
 import { AuthContextProvider } from "./Admin/context/AuthContext";
 import { UserContextProvider } from "./Admin/context/UserContext";
+import { OrderProvider } from "./Admin/context/OrderContext";
+import { OrderList } from "./Admin/pages/list/OrderList";
+import { OrderDetail } from "./Admin/pages/single/OrderDetail";
+import { UserDetail } from "./Admin/pages/single/UserDetail";
 
 function App() {
   return (
     <div className="App">
       <AuthContextProvider>
         <UserContextProvider>
-      <ProductProvider>
-        <CategoryProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/">
-                <Route index element={<Login />} />
-                <Route path="home" element={<Home />} />
-                <Route path="login" element={<Login />} />
-                <Route path="users">
-                  <Route index element={<UserList />} />
-                  <Route path=":userId" element={<ProductDetail />} />
-                  <Route path="new" element={<NewUser />} />
-                </Route>
-                <Route path="products">
-                  <Route index element={<ProductList />} />
-                  <Route path=":productId" element={<ProductDetail />} />
-                  <Route
-                    path="new"
-                    element={<NewProduct inputs={productInputs} />}
-                  />
-                </Route>
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </CategoryProvider>
-      </ProductProvider>
-      </UserContextProvider>
+          <ProductProvider>
+            <CategoryProvider>
+              <OrderProvider>
+                <BrowserRouter>
+                  <Routes>
+                    <Route path="/">
+                      <Route index element={<Login />} />
+                      <Route path="home" element={<Home />} />
+                      <Route path="login" element={<Login />} />
+                      <Route path="users">
+                        <Route index element={<UserList />} />
+                        <Route path=":userId" element={<UserDetail />} />
+                        <Route path="new" element={<NewUser />} />
+                      </Route>
+                      <Route path="products">
+                        <Route index element={<ProductList />} />
+                        <Route path=":productId" element={<ProductDetail />} />
+                        <Route
+                          path="new"
+                          element={<NewProduct inputs={productInputs} />}
+                        />
+                      </Route>
+                      <Route path="orders">
+                        <Route index element={<OrderList />} />
+                        <Route path=":orderId" element={<OrderDetail />} />
+                      </Route>
+                    </Route>
+                  </Routes>
+                </BrowserRouter>
+              </OrderProvider>
+            </CategoryProvider>
+          </ProductProvider>
+        </UserContextProvider>
       </AuthContextProvider>
     </div>
   );

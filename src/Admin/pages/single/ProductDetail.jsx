@@ -28,7 +28,6 @@ export const ProductDetail = () => {
       .catch((err) => console.log(err));
   }, [param.productId, getById]);
 
-  // console.log({ imgUrl });
 
   return (
     <div className="single">

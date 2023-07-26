@@ -8,8 +8,8 @@ import { useToast } from "@chakra-ui/react";
 
 export const Login = () => {
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: "string@gmail.com",
+    password: "string",
   });
   const navigate = useNavigate();
   const {login} = useLogin();
@@ -22,7 +22,7 @@ export const Login = () => {
     if (FbUser) {
       navigate("/home");
     }
-  }, [FbUser]);
+  }, [FbUser, navigate]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;

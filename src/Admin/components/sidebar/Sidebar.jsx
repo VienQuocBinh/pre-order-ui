@@ -1,12 +1,11 @@
 import "./sidebar.scss";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import CreditCardOutlinedIcon from "@mui/icons-material/CreditCardOutlined";
 import PortraitOutlinedIcon from "@mui/icons-material/PortraitOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import { useProductContext } from "../../context/ProductContext";
 import { Link } from "react-router-dom";
 
 export const Sidebar = () => {
@@ -19,7 +18,7 @@ export const Sidebar = () => {
       <div className="center">
         <ul>
           <p className="title">MAIN</p>
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <Link to="/home" style={{ textDecoration: "none" }}>
             <li>
               <DashboardOutlinedIcon className="icon" />
               <span>Dashboard</span>
@@ -38,10 +37,12 @@ export const Sidebar = () => {
               <span>Products</span>
             </li>
           </Link>
-          <li>
-            <CreditCardOutlinedIcon className="icon" />
-            <span>Orders</span>
-          </li>
+          <Link to="/orders" style={{ textDecoration: "none" }}>
+            <li>
+              <CreditCardOutlinedIcon className="icon" />
+              <span>Orders</span>
+            </li>
+          </Link>
           <p className="title">USER</p>
           <li>
             <PortraitOutlinedIcon className="icon" />

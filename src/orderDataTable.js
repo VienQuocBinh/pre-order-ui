@@ -1,24 +1,35 @@
-export const productColumns = [
+import { useEffect } from "react";
+import { useOrderContext } from "./Admin/context/OrderContext";
+
+// const { getById } = useOrderContext();
+
+export const orderColumns = [
   { field: "id", headerName: "ID", width: 70 },
   {
-    field: "productCode",
+    field: "orderCode",
     headerName: "Code",
     width: 100,
   },
-  {
-    field: "name",
-    headerName: "Name",
-    width: 250,
-  },
   // {
-  //   field: "description",
-  //   headerName: "Description",
-  //   width: 400,
+  //   field: "paymentType.paymentMethod",
+  //   headerName: "Payment Type",
+  //   width: 150,
   // },
   {
-    field: "execptedReleaseDate",
-    headerName: "Expected Release Date",
-    width: 200,
+    field: "deliveryPhone",
+    headerName: "Delivery Phone",
+    width: 150,
+  },
+  // {
+  //   field: "customerName",
+  //   headerName: "Customer",
+  //   width: 200,
+  //   valueGetter: (params) => params.row.customer.name
+  // },
+  {
+    field: "checkInDate",
+    headerName: "Check In Date",
+    width: 150,
     type: "Date",
     valueFormatter: (params) => {
       // Format the date to "dd/MM/yyyy" format
@@ -35,9 +46,9 @@ export const productColumns = [
     },
   },
   {
-    field: "price",
-    headerName: "Price",
-    width: 150,
+    field: "finalAmount",
+    headerName: "Amount",
+    width: 180,
     type: "number",
     valueFormatter: (params) => {
       // Format the number with commas
@@ -45,13 +56,13 @@ export const productColumns = [
     },
   },
   {
-    field: "isActive",
+    field: "isConfirm",
     headerName: "Status",
-    width: 120,
+    width: 150,
     renderCell: (params) => {
       return (
-        <div className={`cellWithStatus ${params.row.isActive}`}>
-          {params.row.isActive ? "Active" : "Deleted"}
+        <div className={`cellWithStatus ${params.row.isConfirm}`}>
+          {params.row.isConfirm ? "Confirmed" : "Not Confirmed"}
         </div>
       );
     },

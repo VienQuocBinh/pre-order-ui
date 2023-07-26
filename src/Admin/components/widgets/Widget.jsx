@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./widget.scss";
 import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
 import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined";
@@ -7,13 +7,20 @@ import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import { Link } from "react-router-dom";
+import useOrder from "../../hooks/useOrder";
 
 export const Widget = ({ type }) => {
+  const { getAllOrders } = useOrder();
+  const [orders, setOrders] = useState([]);
   let data;
-
   //temporary
-  const amount = 100;
   const diff = 20;
+
+  useEffect(() => {
+    getAllOrders("accessToken")
+      .then((res) => setOrders(res.data))
+      .catch((err) => console.log(err));
+  }, [getAllOrders]);
 
   switch (type) {
     case "user":
@@ -21,6 +28,8 @@ export const Widget = ({ type }) => {
         title: "USERS",
         isMoney: false,
         link: "View all users",
+        to: "/users",
+        value: "val",
         icon: (
           <AccountCircleOutlinedIcon
             className="icon"
@@ -37,6 +46,8 @@ export const Widget = ({ type }) => {
         title: "ORDERS",
         isMoney: false,
         link: "View all orders",
+        to: "/orders",
+        value: orders.length,
         icon: (
           <StorefrontOutlinedIcon
             className="icon"
@@ -53,6 +64,8 @@ export const Widget = ({ type }) => {
         title: "EARNING",
         isMoney: true,
         link: "View net earning",
+        to: "/home",
+        value: "val",
         icon: (
           <MonetizationOnOutlinedIcon
             className="icon"
@@ -69,6 +82,8 @@ export const Widget = ({ type }) => {
         title: "BALANCE",
         isMoney: true,
         link: "See details",
+        to: "/home",
+        value: "val",
         icon: (
           <AccountBalanceWalletOutlinedIcon
             className="icon"
@@ -83,14 +98,15 @@ export const Widget = ({ type }) => {
     default:
       break;
   }
+
   return (
     <div className="widget">
       <div className="left">
         <span className="title">{data.title}</span>
         <span className="counter">
-          {data.isMoney && "$"} {amount}
+          {data.isMoney && "$"} {data.value}
         </span>
-        <Link to="/users">
+        <Link to={data.to}>
           <span className="link">{data.link}</span>
         </Link>
       </div>
