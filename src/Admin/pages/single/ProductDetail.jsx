@@ -1,6 +1,6 @@
 import "./productSingle.scss";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useProductContext } from "../../context/ProductContext";
 import { Product } from "../../model/Product";
 import { Sidebar } from "../../components/sidebar/Sidebar";
@@ -59,7 +59,9 @@ export const ProductDetail = () => {
               </div>
             ) : (
               <>
-                <div className="editButton">Edit</div>
+                <Link to={`/products/edit/${product.id}`}>
+                  <div className="editButton">Edit</div>
+                </Link>
                 <h1 className="title">Information</h1>
                 <div className="item">
                   <img src={imgUrl} alt="" className="itemImg" />
@@ -72,7 +74,9 @@ export const ProductDetail = () => {
                     </div>
                     <div className="detailItem">
                       <span className="itemKey">Price:</span>
-                      <span className="itemValue">{product.price}</span>
+                      <span className="itemValue">
+                        {Number(product.price).toLocaleString()} VND
+                      </span>
                     </div>
                     <div className="detailItem">
                       <span className="itemKey">Expect Release date:</span>

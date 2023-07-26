@@ -61,7 +61,7 @@ export const productInputs = [
   },
   {
     id: 3,
-    label: "Execpected Release Date",
+    label: "Expected Release Date",
     key: "execptedReleaseDate",
     type: "date",
     placeholder: "Computers",
@@ -69,7 +69,7 @@ export const productInputs = [
   },
   {
     id: 4,
-    label: "Price",
+    label: "Price (VND)",
     key: "price",
     type: "number",
     placeholder: "100",

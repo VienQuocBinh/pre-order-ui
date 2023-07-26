@@ -30,22 +30,31 @@ const create = (product, accessToken) =>
     .then((res) => res.data)
     .catch((err) => console.log(err));
 
-
 const deleteProduct = (id, accessToken) =>
-    api
-      .delete(`/product/Delete?productId=${id}`, {
-        headers: {
-          authorization: "Bearer " + accessToken,
-        },
-      })
-      .then((res) => res.data)
-      .catch((err) => console.log(err));
+  api
+    .delete(`/product/Delete?productId=${id}`, {
+      headers: {
+        authorization: "Bearer " + accessToken,
+      },
+    })
+    .then((res) => res.data)
+    .catch((err) => console.log(err));
 
+const updateProduct = (id, product, accessToken) =>
+  api
+    .post(`/product/Update?${id}`, product, {
+      headers: {
+        authorization: "Bearer " + accessToken,
+      },
+    })
+    .then((res) => res.data)
+    .catch((err) => console.log(err));
 const productApi = {
   getAllProducts,
   getById,
   create,
-  deleteProduct
+  deleteProduct,
+  updateProduct,
 };
 
 export default productApi;

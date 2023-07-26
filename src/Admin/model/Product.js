@@ -11,9 +11,9 @@ export const Product = {
     name: "",
     isActive: true,
     createAt: "",
-    updateAt: ""
+    updateAt: "",
   },
-  campainId: 2,
+  campainId: 0,
   discountRate: 0,
   productDetails: [
     {
@@ -26,20 +26,30 @@ export const Product = {
       height: 0,
       material: "",
       description: "",
+      updateAt: "",
     },
-  ], // ProductDetail
+  ],
 };
 
-
-// export const ProductDetails = {
-//     id: 0,
-//     productId: 0,
-//     size: "",
-//     color: 0,
-//     imgUrl: "",
-//     width: 0,
-//     height: 0,
-//     material: "",
-//     description: "",
-//     updateAt: "",
-//   };
+export const ProductUpdate = {
+  name: "",
+  productCode: "",
+  price: 0,
+  description: "",
+  execptedReleaseDate: "",
+  isActive: true,
+  categoryId:0,
+  campainId: null,
+  discountRate: 0,
+  productDetails: [
+    {
+      size: "",
+      color: "",
+      imgUrl: "",
+      width: 0,
+      height: 0,
+      material: "",
+      description: "",
+    },
+  ],
+};

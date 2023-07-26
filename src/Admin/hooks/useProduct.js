@@ -21,11 +21,17 @@ const useProduct = () => {
     return res;
   };
 
+  const updateProduct = async (id, product, accessToken) => {
+    const res = await productApi.updateProduct(id, product, accessToken);
+    return res;
+  };
+
   return {
     getAllProducts,
     getById,
     create,
     deleteProduct,
+    updateProduct,
   };
 };
 

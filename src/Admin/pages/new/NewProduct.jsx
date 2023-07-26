@@ -138,7 +138,7 @@ export const NewProduct = ({ inputs }) => {
               ))}
 
               <div className="formInput" key={"categoryId"}>
-                <label>Choose a campaign:</label>
+                <label>Choose a category:</label>
                 <select
                   name="categoryId"
                   value={formData.categoryId}

@@ -21,7 +21,7 @@ export const ProductDataTable = () => {
       .then(() => setLoading(false))
       .catch((err) => err);
   }, [getAllProducts]);
-console.log(products);
+// console.log(products);
   const handleDelete = (id) => {
     console.log(id);
     // setData(data.filter((item) => item.id !== id));
