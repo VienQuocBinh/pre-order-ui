@@ -16,6 +16,7 @@ import { OrderList } from "./Admin/pages/list/OrderList";
 import { OrderDetail } from "./Admin/pages/single/OrderDetail";
 import { UserDetail } from "./Admin/pages/single/UserDetail";
 import { ChakraProvider } from "@chakra-ui/react";
+import { AccountProvider } from "./Admin/context/AccountContext";
 
 function App() {
   return (
@@ -23,38 +24,43 @@ function App() {
       {/* <ChakraProvider> */}
       <AuthContextProvider>
         <UserContextProvider>
-          <ProductProvider>
-            <CategoryProvider>
-              <OrderProvider>
-                <BrowserRouter>
-                  <Routes>
-                    <Route path="/">
-                      <Route index element={<Login />} />
-                      <Route path="home" element={<Home />} />
-                      <Route path="login" element={<Login />} />
-                      <Route path="users">
-                        <Route index element={<UserList />} />
-                        <Route path=":userId" element={<UserDetail />} />
-                        <Route path="new" element={<NewUser />} />
+          <AccountProvider>
+            <ProductProvider>
+              <CategoryProvider>
+                <OrderProvider>
+                  <BrowserRouter>
+                    <Routes>
+                      <Route path="/">
+                        <Route index element={<Login />} />
+                        <Route path="home" element={<Home />} />
+                        <Route path="login" element={<Login />} />
+                        <Route path="users">
+                          <Route index element={<UserList />} />
+                          <Route path=":userId" element={<UserDetail />} />
+                          <Route path="new" element={<NewUser />} />
+                        </Route>
+                        <Route path="products">
+                          <Route index element={<ProductList />} />
+                          <Route
+                            path=":productId"
+                            element={<ProductDetail />}
+                          />
+                          <Route
+                            path="new"
+                            element={<NewProduct inputs={productInputs} />}
+                          />
+                        </Route>
+                        <Route path="orders">
+                          <Route index element={<OrderList />} />
+                          <Route path=":orderId" element={<OrderDetail />} />
+                        </Route>
                       </Route>
-                      <Route path="products">
-                        <Route index element={<ProductList />} />
-                        <Route path=":productId" element={<ProductDetail />} />
-                        <Route
-                          path="new"
-                          element={<NewProduct inputs={productInputs} />}
-                        />
-                      </Route>
-                      <Route path="orders">
-                        <Route index element={<OrderList />} />
-                        <Route path=":orderId" element={<OrderDetail />} />
-                      </Route>
-                    </Route>
-                  </Routes>
-                </BrowserRouter>
-              </OrderProvider>
-            </CategoryProvider>
-          </ProductProvider>
+                    </Routes>
+                  </BrowserRouter>
+                </OrderProvider>
+              </CategoryProvider>
+            </ProductProvider>
+          </AccountProvider>
         </UserContextProvider>
       </AuthContextProvider>
       {/* </ChakraProvider> */}

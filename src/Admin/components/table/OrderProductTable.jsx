@@ -7,41 +7,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-const rows = [
-  {
-    id: 123,
-    product: "Acer Nitro 5",
-    img: "https://cdn2.cellphones.com.vn/358x358,webp,q100/media/catalog/product/t/e/text_ng_n_7.png",
-    customer: "John Smith",
-    date: "1 March",
-    amount: 788,
-    method: "Cash on Delivery",
-    status: "Approved",
-  },
-  {
-    id: 123,
-    product: "Acer Nitro 5",
-    img: "https://cdn2.cellphones.com.vn/358x358,webp,q100/media/catalog/product/t/e/text_ng_n_7.png",
-    customer: "John Smith",
-    date: "1 March",
-    amount: 788,
-    method: "Cash on Delivery",
-    status: "Approved",
-  },
-  {
-    id: 123,
-    product: "Acer Nitro 5",
-    img: "https://cdn2.cellphones.com.vn/358x358,webp,q100/media/catalog/product/t/e/text_ng_n_7.png",
-    customer: "John Smith",
-    date: "1 March",
-    amount: 788,
-    method: "Cash on Delivery",
-    status: "Pending",
-  },
-];
 
 export const OrderProductTable = ({orderProducts}) => {
-  console.log(orderProducts);
   return (
     <TableContainer component={Paper} className="table">
       <Table sx={{ minWidth: 650 }} aria-label="simple table">

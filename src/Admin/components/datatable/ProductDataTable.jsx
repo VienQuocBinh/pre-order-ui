@@ -5,25 +5,27 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useProductContext } from "../../context/ProductContext";
 import { CircularProgress } from "@mui/material";
+import useUserContext from "../../hooks/useUserContext";
 
 export const ProductDataTable = () => {
   const { getAllProducts, deleteProduct } = useProductContext();
+  const { accessToken } = useUserContext();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
-    getAllProducts("accessToken")
+    getAllProducts(accessToken)
       .then((res) => setProducts(res.data))
       .then(() => setLoading(false))
       .catch((err) => err);
   }, [getAllProducts]);
-
+console.log(products);
   const handleDelete = (id) => {
     console.log(id);
     // setData(data.filter((item) => item.id !== id));
-    deleteProduct(id, "accessToken")
+    deleteProduct(id, accessToken)
       .then((res) => console.log())
       .catch((err) => console.log(err));
     navigate("/products");

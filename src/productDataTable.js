@@ -11,9 +11,9 @@ export const productColumns = [
     width: 250,
   },
   // {
-  //   field: "description",
-  //   headerName: "Description",
-  //   width: 400,
+  //   field: "category.id",
+  //   headerName: "Category",
+  //   width: 200,
   // },
   {
     field: "execptedReleaseDate",

@@ -6,11 +6,19 @@ export const Product = {
   description: "",
   execptedReleaseDate: "",
   isActive: true,
-  categoryId: 0,
+  category: {
+    id: 0,
+    name: "",
+    isActive: true,
+    createAt: "",
+    updateAt: ""
+  },
   campainId: 2,
   discountRate: 0,
   productDetails: [
     {
+      id: 0,
+      productId: 0,
       size: "",
       color: "",
       imgUrl: "",

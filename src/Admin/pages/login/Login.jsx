@@ -38,6 +38,7 @@ export const Login = () => {
       console.log("Login user response:", res);
       if (res.data.status.success === true) {
         SetUser(res.data.data); // Extracting the "data" object and updating state
+        SetAccessToken(res.data.data.accessToken);
         toast({
           title: "Đăng nhập thành công!",
           status: "success",

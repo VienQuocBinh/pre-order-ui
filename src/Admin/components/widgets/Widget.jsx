@@ -7,11 +7,14 @@ import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import { Link } from "react-router-dom";
-import useOrder from "../../hooks/useOrder";
+import { useOrderContext } from "../../context/OrderContext";
+import { useAccountContext } from "../../context/AccountContext";
 
 export const Widget = ({ type }) => {
-  const { getAllOrders } = useOrder();
+  const { getAllOrders } = useOrderContext();
+  const { getAllAccounts } = useAccountContext();
   const [orders, setOrders] = useState([]);
+  const [accounts, setAccounts] = useState([]);
   let data;
   //temporary
   const diff = 20;
@@ -22,6 +25,12 @@ export const Widget = ({ type }) => {
       .catch((err) => console.log(err));
   }, [getAllOrders]);
 
+  useEffect(() => {
+    getAllAccounts("accessToken")
+      .then((res) => setAccounts(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
   switch (type) {
     case "user":
       data = {
@@ -29,7 +38,7 @@ export const Widget = ({ type }) => {
         isMoney: false,
         link: "View all users",
         to: "/users",
-        value: "val",
+        value: accounts.length,
         icon: (
           <AccountCircleOutlinedIcon
             className="icon"

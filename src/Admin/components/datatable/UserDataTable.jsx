@@ -1,49 +1,82 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns, userRows } from "../../../datatablesource";
+import { userColumns } from "../../../userDataTable";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAccountContext } from "../../context/AccountContext";
+import { CircularProgress } from "@mui/material";
 
 export const UserDataTable = () => {
-  const [data, setData] = useState(userRows);
-
+  const [accounts, setAccounts] = useState([]);
+  const { getAllAccounts } = useAccountContext();
+  const [loading, setLoading] = useState(false);
+  
+  
   const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+    setAccounts(accounts.filter((item) => item.id !== id));
   };
+
+  useEffect(() => {
+    setLoading(true);
+
+    getAllAccounts("accessToken")
+      .then((res) => setAccounts(res.data))
+      .then(() => setLoading(false))
+      .catch((err) => console.log(err));
+  }, []);
 
   const actionColumn = [
     {
       field: "action",
       headerName: "Action",
-      width: 200,
+      width: 150,
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to="/users/test" style={{ textDecoration: "none" }}>
+            <Link
+              to={`/users/${params.row.id}`}
+              style={{ textDecoration: "none" }}
+            >
               <div className="viewButton">View</div>
             </Link>
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
-            >
-              Delete
-            </div>
+            {params.row.isActive ? (
+              <div
+                className="deleteButton"
+                onClick={() => handleDelete(params.row.id)}
+              >
+                Delete
+              </div>
+            ) : null}
           </div>
         );
       },
     },
   ];
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress color="secondary" />
+      </div>
+    );
+  }
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Add New User
+        User Management
         <Link to="/users/new" className="link">
           Add New
         </Link>
       </div>
       <DataGrid
         className="datagrid"
-        rows={data}
+        rows={accounts}
         columns={userColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}

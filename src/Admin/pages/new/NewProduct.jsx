@@ -6,6 +6,10 @@ import { useEffect, useState } from "react";
 import { useProductContext } from "../../context/ProductContext";
 import { Product } from "../../model/Product";
 import { useCategoryContext } from "../../context/CategoryContext";
+import useUserContext from "../../hooks/useUserContext";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../../firebase/firebase";
+import { useToast } from "@chakra-ui/react";
 
 export const NewProduct = ({ inputs }) => {
   const [file, setFile] = useState("");
@@ -13,6 +17,8 @@ export const NewProduct = ({ inputs }) => {
   const [categories, setCategories] = useState([]);
   const { create } = useProductContext();
   const { getAllCatgories } = useCategoryContext();
+  const { accessToken } = useUserContext();
+  const toast = useToast();
 
   useEffect(() => {
     getAllCatgories()
@@ -50,11 +56,37 @@ export const NewProduct = ({ inputs }) => {
   };
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    if (file) {
+      const imageRef = ref(storage, `images/${file.name}`);
 
-    console.log(formData);
-    create(formData, "accessToken");
+      try {
+        uploadBytes(imageRef, file).then((snapshot) => {
+          getDownloadURL(snapshot.ref).then((downloadURL) => {
+            console.log(downloadURL);
+            setFormData((prevFormData) => ({
+              ...prevFormData,
+              productDetails: [
+                {
+                  ...prevFormData.productDetails[0],
+                  imgUrl: downloadURL,
+                },
+              ],
+            }));
+          });
+          toast({
+            title: "Tạo sản phẩm thành công!",
+            status: "success",
+            position: "top-right",
+            isClosable: true,
+            duration: 3000,
+          });
+        });
+      } catch (error) {
+        console.error("Error uploading image to Firebase:", error);
+      }
+    }
+    create(formData, accessToken);
   };
-
   return (
     <div className="new">
       <Sidebar />
@@ -113,7 +145,9 @@ export const NewProduct = ({ inputs }) => {
                   onChange={handleCategoryChange}
                 >
                   {categories.map((c) => (
-                    <option key={c.id} value={c.id}>{c.name}</option>
+                    <option key={c.id} value={c.id}>
+                      {c.name}
+                    </option>
                   ))}
                 </select>
               </div>

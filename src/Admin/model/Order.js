@@ -6,6 +6,8 @@ export const Order = {
     name: "",
     email: "",
     phone: "",
+    imgUrl:"",
+    isActive: true
   },
   paymentType: 0,
   deliveryPhone: "",

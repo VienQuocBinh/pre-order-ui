@@ -18,7 +18,7 @@ export const OrderDataTable = () => {
       .then(() => setLoading(false))
       .catch((err) => console.log(err));
   }, [getAllOrders]);
-
+console.log(orders);
   const actionColumn = [
     {
       field: "action",
