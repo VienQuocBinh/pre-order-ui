@@ -15,10 +15,12 @@ import { OrderProvider } from "./Admin/context/OrderContext";
 import { OrderList } from "./Admin/pages/list/OrderList";
 import { OrderDetail } from "./Admin/pages/single/OrderDetail";
 import { UserDetail } from "./Admin/pages/single/UserDetail";
+import { ChakraProvider } from "@chakra-ui/react";
 
 function App() {
   return (
     <div className="App">
+      {/* <ChakraProvider> */}
       <AuthContextProvider>
         <UserContextProvider>
           <ProductProvider>
@@ -55,6 +57,7 @@ function App() {
           </ProductProvider>
         </UserContextProvider>
       </AuthContextProvider>
+      {/* </ChakraProvider> */}
     </div>
   );
 }

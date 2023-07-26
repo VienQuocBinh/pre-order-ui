@@ -7,8 +7,23 @@ import CreditCardOutlinedIcon from "@mui/icons-material/CreditCardOutlined";
 import PortraitOutlinedIcon from "@mui/icons-material/PortraitOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import useUserContext from "../../hooks/useUserContext";
+import useAuthContext from "../../hooks/useAuthContext";
+import { useToast, Button } from "@chakra-ui/react";
 
 export const Sidebar = () => {
+  const navigate = useNavigate();
+  const toast = useToast();
+  const { SetUser, SetAccessToken, SetRefreshToken, accessToken } =
+    useUserContext();
+  const { user: FbUser, loading } = useAuthContext();
+
+  const handleLogout = () => {
+    SetUser(null);
+    navigate("/");
+  }
+
   return (
     <div className="sidebar">
       <div className="top">
@@ -51,7 +66,19 @@ export const Sidebar = () => {
           <p className="title">SERVICE</p>
           <li>
             <LogoutOutlinedIcon className="icon" />
-            <span>Logout</span>
+            <span>
+                  <button
+                    onClick={handleLogout} 
+                    style={{border: "none"
+                            ,color: "purple"
+                            ,backgroundColor: "transparent"
+                            ,color: "#999"
+                            ,fontWeight: "bold"
+                            ,fontSize: "14px"}}
+                    >
+                      Logout
+                  </button>
+            </span>
           </li>
         </ul>
       </div>
