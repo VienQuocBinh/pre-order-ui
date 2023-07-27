@@ -10,6 +10,7 @@ import useUserContext from "../../hooks/useUserContext";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../firebase/firebase";
 import { useToast } from "@chakra-ui/react";
+import { isValid, parseISO, isBefore, isAfter } from "date-fns";
 
 export const NewProduct = ({ inputs }) => {
   const [file, setFile] = useState("");
@@ -18,6 +19,15 @@ export const NewProduct = ({ inputs }) => {
   const { create } = useProductContext();
   const { getAllCatgories } = useCategoryContext();
   const { accessToken } = useUserContext();
+  const [formValid, setFormValid] = useState(false);
+  const generateInitialValidations = () => {
+    const initialValidations = {};
+    inputs.forEach((input) => {
+      initialValidations[input.key] = true;
+    });
+    return initialValidations;
+  };
+  const [validations, setValidations] = useState(generateInitialValidations());
   const toast = useToast();
 
   useEffect(() => {
@@ -28,6 +38,39 @@ export const NewProduct = ({ inputs }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    // Perform validation based on the input name
+    switch (name) {
+      case "price":
+      case "productDetails.size":
+      case "productDetails.width":
+      case "productDetails.height":
+        setValidations((prevValidations) => ({
+          ...prevValidations,
+          [name]: parseFloat(value) > 0,
+        }));
+        break;
+      case "discountRate":
+        setValidations((prevValidations) => ({
+          ...prevValidations,
+          [name]: parseFloat(value) >= 0 && parseFloat(value) <= 100,
+        }));
+        break;
+      case "execptedReleaseDate":
+        const currentDate = new Date();
+        const inputDate = parseISO(value);
+        const isBeforeCurrentDate = isBefore(inputDate, currentDate);
+        const isAfterCurrentDate = isAfter(inputDate, currentDate);
+
+        setValidations((prevValidations) => ({
+          ...prevValidations,
+          [name]:
+            !isBeforeCurrentDate && isAfterCurrentDate && isValid(inputDate),
+        }));
+        break;
+      // Add more cases for other input keys as needed
+      default:
+        break;
+    }
     // Split the name to get the nested property (if any)
     const nameParts = name.split(".");
     if (nameParts.length > 1) {
@@ -46,7 +89,11 @@ export const NewProduct = ({ inputs }) => {
         [name]: value,
       }));
     }
+    // Check if all validations are true
+    const allValid = Object.values(validations).every((isValid) => isValid);
+    setFormValid(allValid);
   };
+
   const handleCategoryChange = (e) => {
     const categoryId = e.target.value;
     setFormData((prevFormData) => ({
@@ -133,17 +180,17 @@ export const NewProduct = ({ inputs }) => {
                     placeholder={input.placeholder}
                     value={input.value}
                     onChange={handleInputChange}
+                    className={!validations[input.key] ? "invalid" : ""}
                   />
+                  {!validations[input.key] && (
+                    <span className="error-message">Invalid input</span>
+                  )}
                 </div>
               ))}
 
               <div className="formInput" key={"categoryId"}>
                 <label>Choose a category:</label>
-                <select
-                  name="categoryId"
-                  value={formData.categoryId}
-                  onChange={handleCategoryChange}
-                >
+                <select name="categoryId" onChange={handleCategoryChange}>
                   {categories.map((c) => (
                     <option key={c.id} value={c.id}>
                       {c.name}
@@ -152,7 +199,12 @@ export const NewProduct = ({ inputs }) => {
                 </select>
               </div>
 
-              <button>Send</button>
+              <button
+                className={formValid ? "" : "disabled-button"}
+                disabled={!formValid}
+              >
+                Send
+              </button>
             </form>
           </div>
         </div>

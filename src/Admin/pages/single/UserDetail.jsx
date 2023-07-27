@@ -83,13 +83,13 @@ export const UserDetail = () => {
                     width={"500px"}
                     height={"500px"}
                   />
-                  <input
+                {/*  <input
                     type="file"
                     onChange={(event) => {
                       setImageUpload(event.target.files[0]);
                     }}
                   />
-                  <button
+                   <button
                     onClick={UploadImage}
                     style={{
                       border: "2px solid blue",
@@ -99,7 +99,7 @@ export const UserDetail = () => {
                     }}
                   >
                     Upload Image
-                  </button>
+                  </button> */}
 
                   <div className="details">
                     <h1 className="itemTitle">{account.name}</h1>

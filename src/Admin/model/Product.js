@@ -13,7 +13,12 @@ export const Product = {
     createAt: "",
     updateAt: "",
   },
-  campainId: 0,
+  campain: {
+    id: 0,
+    name: "",
+    isActive: true,
+    campainPhases: [],
+  },
   discountRate: 0,
   productDetails: [
     {
@@ -38,7 +43,7 @@ export const ProductUpdate = {
   description: "",
   execptedReleaseDate: "",
   isActive: true,
-  categoryId:0,
+  categoryId: 0,
   campainId: null,
   discountRate: 0,
   productDetails: [

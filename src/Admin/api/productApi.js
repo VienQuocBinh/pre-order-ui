@@ -42,7 +42,7 @@ const deleteProduct = (id, accessToken) =>
 
 const updateProduct = (id, product, accessToken) =>
   api
-    .post(`/product/Update?${id}`, product, {
+    .post(`/product/Update?productId=${id}`, product, {
       headers: {
         authorization: "Bearer " + accessToken,
       },

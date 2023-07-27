@@ -70,9 +70,9 @@ export const UserDataTable = () => {
     <div className="datatable">
       <div className="datatableTitle">
         User Management
-        <Link to="/users/new" className="link">
+        {/* <Link to="/users/new" className="link">
           Add New
-        </Link>
+        </Link> */}
       </div>
       <DataGrid
         className="datagrid"

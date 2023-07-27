@@ -2,7 +2,7 @@ import api from "./api";
 
 const getAllOrders = (accessToken) =>
   api
-    .get("/order/getAll", {
+    .get("/order/getAll?PageSize=999", {
       headers: {
         authorization: "Bearer " + accessToken,
       },

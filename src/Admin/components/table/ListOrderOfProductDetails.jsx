@@ -6,11 +6,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import useUserContext from "../../hooks/useUserContext";
 import { useOrderContext } from "../../context/OrderContext";
 import { useEffect, useState } from "react";
+import useUserContext from "../../hooks/useUserContext";
 
-export const List = () => {
+export const ListOrderOfProductDetails = ({productCode}) => {
+
   const { accessToken } = useUserContext();
   const { getAllOrders } = useOrderContext();
   const [orders, setOrders] = useState([]);
@@ -99,4 +100,4 @@ export const List = () => {
       </Table>
     </TableContainer>
   );
-};
+}

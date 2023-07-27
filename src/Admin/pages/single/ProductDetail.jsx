@@ -5,10 +5,11 @@ import { useProductContext } from "../../context/ProductContext";
 import { Product } from "../../model/Product";
 import { Sidebar } from "../../components/sidebar/Sidebar";
 import { Navbar } from "../../components/navbar/Navbar";
-import { Chart } from "../../components/chart/Chart";
+import { ChartHome } from "../../components/chart/Chart";
 import { List } from "../../components/table/Table";
 import { CircularProgress } from "@mui/material";
 import useUserContext from "../../hooks/useUserContext";
+import { ListOrderOfProductDetails } from "../../components/table/ListOrderOfProductDetails";
 
 export const ProductDetail = () => {
   const param = useParams();
@@ -92,18 +93,60 @@ export const ProductDetail = () => {
                       <span className="itemKey">Description:</span>
                       <span className="itemValue">{product.description}</span>
                     </div>
+                    <div className="detailItem">
+                      <span className="itemKey">Color:</span>
+                      <span className="itemValue">
+                        {product.productDetails[0].color}
+                      </span>
+                    </div>
+                    <div className="detailItem">
+                      <span className="itemKey">Size:</span>
+                      <span className="itemValue">
+                        {product.productDetails[0].size} (cm)
+                      </span>
+                    </div>
+                    <div className="detailItem">
+                      <span className="itemKey">Height:</span>
+                      <span className="itemValue">
+                        {product.productDetails[0].height} (cm)
+                      </span>
+                    </div>
+                    <div className="detailItem">
+                      <span className="itemKey">Width:</span>
+                      <span className="itemValue">
+                        {product.productDetails[0].width} (cm)
+                      </span>
+                    </div>
+                    <div className="detailItem">
+                      <span className="itemKey">Material:</span>
+                      <span className="itemValue">
+                        {product.productDetails[0].material}
+                      </span>
+                    </div>
+                    <div className="detailItem">
+                      <span className="itemKey">Status:</span>
+                      <span className="itemValue">
+                        {product.isActive ? "Active" : "Deleted"}
+                      </span>
+                    </div>
+                    <div className="detailItem">
+                      <span className="itemKey">Campaign:</span>
+                      <span className="itemValue">
+                        {product.campain != null ? product.campain.name : "Not in any campaigns"}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </>
             )}
           </div>
-          <div className="right">
-            <Chart aspect={3 / 1} title="User Spending ( Last 6 Months)" />
-          </div>
+          {/* <div className="right">
+            <ChartHome aspect={3 / 1} title="User Spending ( Last 6 Months)" />
+          </div> */}
         </div>
         <div className="bottom">
           <h1 className="title">Last Transactions</h1>
-          <List />
+          <ListOrderOfProductDetails productCode={product.productCode} />
         </div>
       </div>
     </div>

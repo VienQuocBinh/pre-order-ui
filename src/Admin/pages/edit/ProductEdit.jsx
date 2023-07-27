@@ -12,7 +12,7 @@ import { Sidebar } from "../../components/sidebar/Sidebar";
 import { Navbar } from "../../components/navbar/Navbar";
 import { DriveFolderUploadOutlined } from "@mui/icons-material";
 import { useCampaignContext } from "../../context/CampaginContext";
-import { LinearProgress } from "@mui/material";
+import { isValid, parseISO, isBefore, isAfter } from "date-fns";
 
 export const ProductEdit = ({ inputs }) => {
   const params = useParams();
@@ -30,6 +30,15 @@ export const ProductEdit = ({ inputs }) => {
   const [campagins, setCampagins] = useState([]);
   const [campaignId, setCampaignId] = useState(0);
   const [formData, setFormData] = useState(ProductUpdate);
+  const [formValid, setFormValid] = useState(false);
+  const generateInitialValidations = () => {
+    const initialValidations = {};
+    inputs.forEach((input) => {
+      initialValidations[input.key] = true;
+    });
+    return initialValidations;
+  };
+  const [validations, setValidations] = useState(generateInitialValidations());
 
   useEffect(() => {
     getAllCatgories()
@@ -61,6 +70,7 @@ export const ProductEdit = ({ inputs }) => {
         }));
         setImgUrl(res.data.productDetails[0].imgUrl);
         setCategoryId(res.data.category.id);
+        setCampaignId(res.data.campain.id);
       })
       .then(() => setLoading(false))
       .catch((err) => console.log(err));
@@ -68,6 +78,40 @@ export const ProductEdit = ({ inputs }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    switch (name) {
+      case "price":
+      case "productDetails.size":
+      case "productDetails.width":
+      case "productDetails.height":
+        setValidations((prevValidations) => ({
+          ...prevValidations,
+          [name]: parseFloat(value) > 0,
+        }));
+        break;
+      case "discountRate":
+        setValidations((prevValidations) => ({
+          ...prevValidations,
+          [name]: parseFloat(value) >= 0 && parseFloat(value) <= 100,
+        }));
+        break;
+      case "execptedReleaseDate":
+        const currentDate = new Date();
+        const inputDate = parseISO(value);
+        const isBeforeCurrentDate = isBefore(inputDate, currentDate);
+        const isAfterCurrentDate = isAfter(inputDate, currentDate);
+
+        setValidations((prevValidations) => ({
+          ...prevValidations,
+          [name]:
+            !isBeforeCurrentDate && isAfterCurrentDate && isValid(inputDate),
+        }));
+        break;
+      // Add more cases for other input keys as needed
+      default:
+        break;
+    }
+
     // Split the name to get the nested property (if any)
     const nameParts = name.split(".");
     if (nameParts.length > 1) {
@@ -86,6 +130,10 @@ export const ProductEdit = ({ inputs }) => {
         [name]: value,
       }));
     }
+
+    // Check if all validations are true
+    const allValid = Object.values(validations).every((isValid) => isValid);
+    setFormValid(allValid);
   };
 
   const handleCategoryChange = (e) => {
@@ -179,8 +227,8 @@ export const ProductEdit = ({ inputs }) => {
     }
 
     console.log(transformFormData(product));
-    console.log(product.id);
-    // updateProduct(product.id, transformFormData(product), accessToken);
+    // console.log(product.id);
+    updateProduct(product.id, transformFormData(product), accessToken);
   };
 
   const formatDate = (dateString) => {
@@ -252,12 +300,21 @@ export const ProductEdit = ({ inputs }) => {
                       value={
                         input.key === "execptedReleaseDate"
                           ? formatDate(product[input.key])
-                          : product[input.key]
+                          : input.key.startsWith("productDetails")
+                          ? product.productDetails[0][
+                              input.key.split(".")[1]
+                            ] || ""
+                          : product[input.key] || ""
                       }
                       onChange={handleInputChange}
                     />
+                    {!validations[input.key] && (
+                      <span className="error-message">Invalid input</span>
+                    )}
                   </div>
                 ))}
+
+                <div className="formInput"></div>
 
                 <div className="formInput">
                   <label>Choose a category:</label>
@@ -277,7 +334,7 @@ export const ProductEdit = ({ inputs }) => {
                   <label>Choose a campaign:</label>
                   <select
                     name="campaignId"
-                    value={campaignId}
+                    value={campaignId == null ? 1 : campaignId}
                     onChange={handleCampaignChange}
                   >
                     {campagins.map((c) => (
@@ -288,7 +345,12 @@ export const ProductEdit = ({ inputs }) => {
                   </select>
                 </div>
 
-                <button>Send</button>
+                <button
+                  className={formValid ? "" : "disabled-button"}
+                  disabled={!formValid}
+                >
+                  Send
+                </button>
               </form>
             </div>
           </div>

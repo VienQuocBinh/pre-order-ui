@@ -75,14 +75,14 @@ export const productInputs = [
     placeholder: "100",
     // value: 120000,
   },
-  {
-    id: 5,
-    label: "Discount Rate (%)",
-    key: "discountRate",
-    type: "number",
-    placeholder: "30",
-    // value: 30,
-  },
+  // {
+  //   id: 5,
+  //   label: "Discount Rate (%)",
+  //   key: "discountRate",
+  //   type: "number",
+  //   placeholder: "30",
+  //   // value: 30,
+  // },
   {
     id: 6,
     label: "Description",
@@ -92,7 +92,7 @@ export const productInputs = [
   },
   {
     id: "productDetails.size",
-    label: "Size",
+    label: "Size (cm)",
     key: "productDetails.size",
     type: "number",
     placeholder: "43",
@@ -108,7 +108,7 @@ export const productInputs = [
   },
   {
     id: "productDetails.width",
-    label: "Width",
+    label: "Width (cm)",
     key: "productDetails.width",
     type: "number",
     placeholder: "120",
@@ -116,7 +116,7 @@ export const productInputs = [
   },
   {
     id: "productDetails.height",
-    label: "Height",
+    label: "Height (cm)",
     key: "productDetails.height",
     type: "number",
     placeholder: "120",

@@ -9,8 +9,10 @@ import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalance
 import { Link } from "react-router-dom";
 import { useOrderContext } from "../../context/OrderContext";
 import { useAccountContext } from "../../context/AccountContext";
+import useUserContext from "../../hooks/useUserContext";
 
 export const Widget = ({ type }) => {
+  const { accessToken } = useUserContext();
   const { getAllOrders } = useOrderContext();
   const { getAllAccounts } = useAccountContext();
   const [orders, setOrders] = useState([]);
@@ -19,14 +21,26 @@ export const Widget = ({ type }) => {
   //temporary
   const diff = 20;
 
+  let totalFinalAmount = 0;
+  orders.forEach((order) => {
+    order.orderDetails.forEach((orderDetail) => {
+      totalFinalAmount += orderDetail.finalAmount;
+    });
+  });
+
+  const totalShippingFee = orders.reduce((total, order) => {
+    return total + order.shippingFee;
+  }, 0);
+
+
   useEffect(() => {
-    getAllOrders("accessToken")
+    getAllOrders(accessToken)
       .then((res) => setOrders(res.data))
       .catch((err) => console.log(err));
   }, [getAllOrders]);
 
   useEffect(() => {
-    getAllAccounts("accessToken")
+    getAllAccounts(accessToken)
       .then((res) => setAccounts(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -74,7 +88,7 @@ export const Widget = ({ type }) => {
         isMoney: true,
         link: "View net earning",
         to: "/home",
-        value: "val",
+        value: Number(totalFinalAmount).toLocaleString(),
         icon: (
           <MonetizationOnOutlinedIcon
             className="icon"
@@ -92,7 +106,7 @@ export const Widget = ({ type }) => {
         isMoney: true,
         link: "See details",
         to: "/home",
-        value: "val",
+        value: Number(totalFinalAmount - totalShippingFee).toLocaleString(),
         icon: (
           <AccountBalanceWalletOutlinedIcon
             className="icon"
@@ -113,17 +127,19 @@ export const Widget = ({ type }) => {
       <div className="left">
         <span className="title">{data.title}</span>
         <span className="counter">
-          {data.isMoney && "$"} {data.value}
+          {data.isMoney ? data.value.toLocaleString() + " VND" : data.value}
         </span>
-        <Link to={data.to}>
-          <span className="link">{data.link}</span>
-        </Link>
+        {data.isMoney ? null : (
+          <Link to={data.to}>
+            <span className="link">{data.link}</span>
+          </Link>
+        )}
       </div>
       <div className="right">
-        <div className="percentage positive">
+        {/* <div className="percentage positive">
           <ArrowUpwardOutlinedIcon className="percentage-icon" />
           {diff} %
-        </div>
+        </div> */}
         {data.icon}
       </div>
     </div>

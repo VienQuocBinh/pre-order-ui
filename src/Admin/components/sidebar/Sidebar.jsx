@@ -22,7 +22,7 @@ export const Sidebar = () => {
   const handleLogout = () => {
     SetUser(null);
     navigate("/");
-  }
+  };
 
   return (
     <div className="sidebar">
@@ -58,28 +58,32 @@ export const Sidebar = () => {
               <span>Orders</span>
             </li>
           </Link>
-          <p className="title">USER</p>
+          {/* <p className="title">USER</p>
           <li>
             <PortraitOutlinedIcon className="icon" />
             <span>Profile</span>
-          </li>
+          </li> */}
           <p className="title">SERVICE</p>
-          <li>
-            <LogoutOutlinedIcon className="icon" />
-            <span>
-                  <button
-                    onClick={handleLogout} 
-                    style={{border: "none"
-                            ,color: "purple"
-                            ,backgroundColor: "transparent"
-                            ,color: "#999"
-                            ,fontWeight: "bold"
-                            ,fontSize: "14px"}}
-                    >
-                      Logout
-                  </button>
-            </span>
-          </li>
+          <Link to="/">
+            <li>
+              <LogoutOutlinedIcon className="icon" />
+              <span>
+                <button
+                  onClick={handleLogout}
+                  style={{
+                    border: "none",
+                    color: "purple",
+                    backgroundColor: "transparent",
+                    color: "#999",
+                    fontWeight: "bold",
+                    fontSize: "14px",
+                  }}
+                >
+                  Logout
+                </button>
+              </span>
+            </li>
+          </Link>
         </ul>
       </div>
 
