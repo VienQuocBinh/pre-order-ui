@@ -1,4 +1,7 @@
 import "./table.scss";
+import React, { useEffect, useState } from "react";
+import useUserContext from "../../hooks/useUserContext";
+import { useOrderContext } from "../../context/OrderContext";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -6,20 +9,19 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useOrderContext } from "../../context/OrderContext";
-import { useEffect, useState } from "react";
-import useUserContext from "../../hooks/useUserContext";
+import { useParams } from "react-router-dom";
 
-export const ListOrderOfProductDetails = ({ productCode }) => {
+export const ListOrderOfUser = ({ userId }) => {
+  const params = useParams();
   const { accessToken } = useUserContext();
-  const { getByProductCode } = useOrderContext();
+  const { getByUserId } = useOrderContext();
   const [orders, setOrders] = useState([]);
-
+console.log(userId);
   useEffect(() => {
-    getByProductCode(productCode.toString(), accessToken)
+    getByUserId(params.userId, accessToken)
       .then((res) => setOrders(res.data))
       .catch((err) => console.log(err));
-  }, [getByProductCode, productCode]);
+  }, [userId]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -53,14 +55,13 @@ export const ListOrderOfProductDetails = ({ productCode }) => {
 
     return sumFinalAmount;
   };
-
   return (
     <TableContainer component={Paper} className="table">
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell className="tableCell">Order ID</TableCell>
-            {/* <TableCell className="tableCell">Product</TableCell> */}
+            <TableCell className="tableCell">Product</TableCell>
             <TableCell className="tableCell">Customer</TableCell>
             <TableCell className="tableCell">Date</TableCell>
             <TableCell className="tableCell">Amount</TableCell>
@@ -72,13 +73,13 @@ export const ListOrderOfProductDetails = ({ productCode }) => {
           {latestOrders.map((row) => (
             <TableRow key={row.id}>
               <TableCell className="tableCell">{row.id}</TableCell>
-              {/* <TableCell className="tableCell">
-                <div className="cellWrapper">
-                  <img src={row.img} alt="" className="image" />
-                  {row.product}
-                </div>
+              <TableCell className="tableCell">
+                {/* <div className="cellWrapper">
+              <img src={row.img} alt="" className="image" />
+              {row.product}
+            </div> */}
                 {row.orderDetails[0].productName}
-              </TableCell> */}
+              </TableCell>
               <TableCell className="tableCell">{row.customer.name}</TableCell>
               <TableCell className="tableCell">
                 {formatDate(row.checkInDate)}

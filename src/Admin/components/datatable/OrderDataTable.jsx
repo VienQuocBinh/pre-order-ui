@@ -5,20 +5,22 @@ import { Link } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import { orderColumns } from "../../../orderDataTable";
 import { DataGrid } from "@mui/x-data-grid";
+import useUserContext from "../../hooks/useUserContext";
 
 export const OrderDataTable = () => {
   const { getAllOrders } = useOrderContext();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { accessToken } = useUserContext();
 
   useEffect(() => {
     setLoading(true);
-    getAllOrders("accessToken")
+    getAllOrders(accessToken)
       .then((res) => setOrders(res.data))
       .then(() => setLoading(false))
       .catch((err) => console.log(err));
   }, [getAllOrders]);
-console.log(orders);
+  
   const actionColumn = [
     {
       field: "action",

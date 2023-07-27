@@ -88,9 +88,9 @@ export const Sidebar = () => {
       </div>
 
       <div className="bottom">
-        <p className="title">Theme: </p>
+        {/* <p className="title">Theme: </p>
         <div className="colorOption"></div>
-        <div className="colorOption"></div>
+        <div className="colorOption"></div> */}
       </div>
     </div>
   );

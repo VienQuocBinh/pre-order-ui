@@ -72,7 +72,7 @@ export const ChartHome = () => {
 
   return (
     <div className="chart">
-      <div className="title">Privious months (Revenue)</div>
+      <div className="title">Previous months (Revenue)</div>
        <ResponsiveContainer width="100%" aspect={2 / 1}>
         <AreaChart
           width={730}

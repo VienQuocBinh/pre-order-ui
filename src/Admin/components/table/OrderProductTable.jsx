@@ -7,8 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-
-export const OrderProductTable = ({orderProducts}) => {
+export const OrderProductTable = ({ orderProducts }) => {
   return (
     <TableContainer component={Paper} className="table">
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -16,7 +15,7 @@ export const OrderProductTable = ({orderProducts}) => {
           <TableRow>
             <TableCell className="tableCell">Product Code</TableCell>
             <TableCell className="tableCell">Product Name</TableCell>
-            <TableCell className="tableCell">Price</TableCell>
+            <TableCell className="tableCell">Unit Price</TableCell>
             <TableCell className="tableCell">Quantity</TableCell>
             <TableCell className="tableCell">Amount</TableCell>
             <TableCell className="tableCell">Discount Rate</TableCell>
@@ -34,11 +33,17 @@ export const OrderProductTable = ({orderProducts}) => {
                 </div>
               </TableCell> */}
               <TableCell className="tableCell">{row.productName}</TableCell>
-              <TableCell className="tableCell">{row.unitPrice}</TableCell>
+              <TableCell className="tableCell">
+                {Number(row.unitPrice).toLocaleString()} VND
+              </TableCell>
               <TableCell className="tableCell">{row.quantity}</TableCell>
-              <TableCell className="tableCell">{row.totalAmount}</TableCell>
-              <TableCell className="tableCell">{row.discountRate}</TableCell>
-              <TableCell className="tableCell">{row.finalAmount}</TableCell>
+              <TableCell className="tableCell">
+                {Number(row.totalAmount).toLocaleString()} VND
+              </TableCell>
+              <TableCell className="tableCell">{row.discountRate} %</TableCell>
+              <TableCell className="tableCell">
+                {Number(row.finalAmount).toLocaleString()} VND
+              </TableCell>
               {/* <TableCell className="tableCell">
                 <span className={`status ${row.status}`}>{row.status}</span>
               </TableCell> */}

@@ -20,9 +20,19 @@ const getById = (id, accessToken) =>
     .then((res) => res.data)
     .catch((err) => console.log(err));
 
-const getByUserId = (accessToken) =>
+const getByUserId = (userId, accessToken) =>
   api
-    .get("/order/getByUserId", {
+    .get(`/admin-order/getByUserId?userId=${userId}&PageSize=999`, {
+      headers: {
+        authorization: "Bearer " + accessToken,
+      },
+    })
+    .then((res) => res.data)
+    .catch((err) => console.log(err));
+
+const getByProductCode = (productCode, accessToken) =>
+  api
+    .get(`/order/getByProductCode?productCode=${productCode}&PageSize=999`, {
       headers: {
         authorization: "Bearer " + accessToken,
       },
@@ -34,6 +44,7 @@ const orderApi = {
   getAllOrders,
   getByUserId,
   getById,
+  getByProductCode,
 };
 
 export default orderApi;

@@ -11,8 +11,13 @@ const useOrder = () => {
     return res;
   };
 
-  const getByUserId = async (accessToken) => {
-    const res = await orderApi.getByUserId(accessToken);
+  const getByUserId = async (userId, accessToken) => {
+    const res = await orderApi.getByUserId(userId, accessToken);
+    return res;
+  };
+
+  const getByProductCode = async (code, accessToken) => {
+    const res = await orderApi.getByProductCode(code, accessToken);
     return res;
   };
 
@@ -20,6 +25,7 @@ const useOrder = () => {
     getAllOrders,
     getByUserId,
     getById,
+    getByProductCode,
   };
 };
 

@@ -10,6 +10,8 @@ import { Chart } from "../../components/chart/Chart";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../firebase/firebase";
 import { Toast, useToast } from "@chakra-ui/react";
+import { ListOrderOfUser } from "../../components/table/ListOrderOfUser";
+import useUserContext from "../../hooks/useUserContext";
 
 export const UserDetail = () => {
   const toast = useToast();
@@ -19,11 +21,14 @@ export const UserDetail = () => {
   const [imgUrl, setImgUrl] = useState("");
   const [imageUpload, setImageUpload] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { accessToken } = useUserContext();
+
   useEffect(() => {
-    getAccountById(params.userId, "token")
+    getAccountById(params.userId, accessToken)
       .then((res) => setAccount(res.data))
       .catch((err) => console.log(err));
-  });
+  }, []);
+
   const UploadImage = () => {
     if (imageUpload == null) return;
 
@@ -83,7 +88,7 @@ export const UserDetail = () => {
                     width={"500px"}
                     height={"500px"}
                   />
-                {/*  <input
+                  {/*  <input
                     type="file"
                     onChange={(event) => {
                       setImageUpload(event.target.files[0]);
@@ -112,6 +117,12 @@ export const UserDetail = () => {
                       <span className="itemValue">{account.phone}</span>
                     </div>
                     <div className="detailItem">
+                      <span className="itemKey">Cash:</span>
+                      <span className="itemValue">
+                        {Number(account.cash).toLocaleString()} VND
+                      </span>
+                    </div>
+                    <div className="detailItem">
                       <span className="itemKey">Created Date:</span>
                       <span className="itemValue">
                         {formatDate(account.createAt.toString())}
@@ -128,6 +139,10 @@ export const UserDetail = () => {
               </>
             )}
           </div>
+        </div>
+        <div className="bottom">
+          <h1 className="title">Last Transactions</h1>
+          <ListOrderOfUser userId={account.id}/>
         </div>
       </div>
     </div>

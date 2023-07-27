@@ -8,6 +8,7 @@ import { Sidebar } from "../../components/sidebar/Sidebar";
 import { Navbar } from "../../components/navbar/Navbar";
 import { List } from "../../components/table/Table";
 import { OrderProductTable } from "../../components/table/OrderProductTable";
+import useUserContext from "../../hooks/useUserContext";
 
 export const OrderDetail = () => {
   const param = useParams();
@@ -15,10 +16,11 @@ export const OrderDetail = () => {
   const { getById } = useOrderContext();
   const [imgUrl, setImgUrl] = useState("");
   const [loading, setLoading] = useState(false);
+  const { accessToken } = useUserContext();
 
   useEffect(() => {
     setLoading(true);
-    getById(param.orderId, "accessToken")
+    getById(param.orderId, accessToken)
       .then((res) => {
         setOrder(res.data);
         //   setImgUrl(res.data.orderDetails[0].imgUrl);
@@ -27,7 +29,6 @@ export const OrderDetail = () => {
       .catch((err) => console.log(err));
   }, [param.orderId, getById]);
 
-  console.log(order);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);

@@ -33,6 +33,15 @@ export const userColumns = [
     width: 120,
   },
   {
+    field: "cash",
+    headerName: "Cash",
+    width: 150,
+    valueFormatter: (params) => {
+      // Format the number with commas
+      return Number(params.value).toLocaleString() + " VND";
+    },
+  },
+  {
     field: "isActive",
     headerName: "Status",
     width: 100,
